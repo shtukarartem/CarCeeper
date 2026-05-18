@@ -1,0 +1,37 @@
+{
+  "name": "carkeeper",
+  "version": "0.1.0",
+  "description": "Telegram bot for tracking car expenses.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "config:check": "tsx src/config/checkConfig.ts",
+    "db:check": "tsx src/db/checkConnection.ts",
+    "migrate:up": "node-pg-migrate up --migrations-dir src/db/migrations --envPath .env",
+    "migrate:down": "node-pg-migrate down --migrations-dir src/db/migrations --envPath .env",
+    "migrate:status": "tsx src/db/checkMigrations.ts"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "grammy": "^1.30.0",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/pg": "^8.11.6",
+    "node-pg-migrate": "^7.5.0",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
