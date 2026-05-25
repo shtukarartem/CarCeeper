@@ -1,6 +1,7 @@
 import { Bot } from 'grammy';
 import { type AppConfig, loadAppConfig } from '../config/env.js';
 import { registerAddCommand } from './commands/add.js';
+import { registerCancelCommand } from './commands/cancel.js';
 import { registerCarCommand } from './commands/car.js';
 import { registerCategoriesCommand } from './commands/categories.js';
 import { registerDoneCommand } from './commands/done.js';
@@ -10,6 +11,7 @@ import { registerFuelCommand } from './commands/fuel.js';
 import { registerFuelStatsCommand } from './commands/fuelStats.js';
 import { registerHelpCommand } from './commands/help.js';
 import { registerHistoryCommand } from './commands/history.js';
+import { registerMenuCommand } from './commands/menu.js';
 import { registerMileageCommand } from './commands/mileage.js';
 import { registerPlaceholderCommands } from './commands/placeholders.js';
 import { registerRemindCommand } from './commands/remind.js';
@@ -25,6 +27,9 @@ import { registerTodoCommand } from './commands/todo.js';
 import { registerUndoCommand } from './commands/undo.js';
 import { registerUnknownMessageHandler } from './handlers/unknown.js';
 import { botCommandMenu } from './commandMenu.js';
+import { registerExpenseFlow } from './flows/expenseFlow.js';
+import { registerFuelFlow } from './flows/fuelFlow.js';
+import { registerServiceFlow } from './flows/serviceFlow.js';
 import { startReminderScheduler } from '../services/reminderScheduler.js';
 import { createTelegramReminderNotificationSender } from '../services/telegramReminderNotificationSender.js';
 
@@ -34,6 +39,8 @@ export function createBot(config = loadAppConfig()): Bot {
   registerStartCommand(bot);
   registerHelpCommand(bot);
   registerExamplesCommand(bot);
+  registerMenuCommand(bot);
+  registerCancelCommand(bot);
   registerCarCommand(bot);
   registerAddCommand(bot);
   registerMileageCommand(bot);
@@ -54,6 +61,9 @@ export function createBot(config = loadAppConfig()): Bot {
   registerUndoCommand(bot);
   registerCategoriesCommand(bot);
   registerPlaceholderCommands(bot);
+  registerExpenseFlow(bot);
+  registerFuelFlow(bot);
+  registerServiceFlow(bot);
   registerUnknownMessageHandler(bot);
 
   bot.catch(async (error) => {

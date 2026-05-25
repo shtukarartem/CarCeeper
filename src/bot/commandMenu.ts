@@ -4,6 +4,8 @@ export const botCommandMenu: BotCommand[] = [
   { command: 'start', description: 'Начать работу' },
   { command: 'help', description: 'Список команд' },
   { command: 'examples', description: 'Примеры заполнения команд' },
+  { command: 'menu', description: 'Кнопки для отчетов и экспорта' },
+  { command: 'cancel', description: 'Отменить текущее действие' },
   { command: 'car', description: 'Добавить или изменить автомобиль' },
   { command: 'mileage', description: 'Обновить текущий пробег' },
   { command: 'add', description: 'Добавить расход' },
