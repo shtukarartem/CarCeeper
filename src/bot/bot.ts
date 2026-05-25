@@ -4,6 +4,7 @@ import { registerAddCommand } from './commands/add.js';
 import { registerCarCommand } from './commands/car.js';
 import { registerCategoriesCommand } from './commands/categories.js';
 import { registerDoneCommand } from './commands/done.js';
+import { registerExamplesCommand } from './commands/examples.js';
 import { registerExportCommand } from './commands/export.js';
 import { registerFuelCommand } from './commands/fuel.js';
 import { registerFuelStatsCommand } from './commands/fuelStats.js';
@@ -23,6 +24,7 @@ import { registerTodayCommand } from './commands/today.js';
 import { registerTodoCommand } from './commands/todo.js';
 import { registerUndoCommand } from './commands/undo.js';
 import { registerUnknownMessageHandler } from './handlers/unknown.js';
+import { botCommandMenu } from './commandMenu.js';
 import { startReminderScheduler } from '../services/reminderScheduler.js';
 import { createTelegramReminderNotificationSender } from '../services/telegramReminderNotificationSender.js';
 
@@ -31,6 +33,7 @@ export function createBot(config = loadAppConfig()): Bot {
 
   registerStartCommand(bot);
   registerHelpCommand(bot);
+  registerExamplesCommand(bot);
   registerCarCommand(bot);
   registerAddCommand(bot);
   registerMileageCommand(bot);
@@ -66,6 +69,10 @@ export function createBot(config = loadAppConfig()): Bot {
   return bot;
 }
 
+async function registerTelegramCommandMenu(bot: Bot): Promise<void> {
+  await bot.api.setMyCommands(botCommandMenu);
+}
+
 function startReminderNotifications(bot: Bot, config: AppConfig): void {
   startReminderScheduler({
     intervalMinutes: config.reminderCheckIntervalMinutes,
@@ -90,6 +97,7 @@ export async function startBot(): Promise<void> {
   }
 
   startReminderNotifications(bot, config);
+  await registerTelegramCommandMenu(bot);
   console.log('CarKeeper bot is starting with long polling.');
   await bot.start({
     drop_pending_updates: true
@@ -104,6 +112,7 @@ export async function startBotWithConfig(config: AppConfig): Promise<void> {
   }
 
   startReminderNotifications(bot, config);
+  await registerTelegramCommandMenu(bot);
   console.log('CarKeeper bot is starting with long polling.');
   await bot.start({
     drop_pending_updates: true

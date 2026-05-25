@@ -99,6 +99,7 @@ npm run migrate:down
 ```text
 /start
 /help
+/examples
 /car Toyota Camry
 /mileage 124000
 /remind страховка 2026-09-01
@@ -134,6 +135,7 @@ npm run migrate:down
 
 ```text
 /start
+/examples
 /car Toyota Camry
 /mileage 124000
 /remind страховка 2026-09-01
@@ -168,6 +170,8 @@ npm run migrate:down
 /history
 /categories
 ```
+
+При вводе `/` Telegram показывает меню команд с краткими описаниями. Команда `/examples` выводит готовые шаблоны заполнения для расходов, топлива, обслуживания, напоминаний, отчетов и экспорта.
 
 ## Отчеты и экспорт
 
