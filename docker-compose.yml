@@ -4,15 +4,30 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      DATABASE_URL: ${DATABASE_URL}
-      DEFAULT_CURRENCY: ${DEFAULT_CURRENCY}
-      NODE_ENV: ${NODE_ENV}
-      BOT_MODE: ${BOT_MODE}
-      PORT: ${PORT}
-      REMINDER_CHECK_INTERVAL_MINUTES: ${REMINDER_CHECK_INTERVAL_MINUTES}
-      WEBHOOK_URL: ${WEBHOOK_URL}
-      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+      DATABASE_URL: postgres://carkeeper:${POSTGRES_PASSWORD}@postgres:5432/carkeeper
+      DEFAULT_CURRENCY: ${DEFAULT_CURRENCY:-BYN}
+      NODE_ENV: production
+      BOT_MODE: polling
+      PORT: 3000
+      REMINDER_CHECK_INTERVAL_MINUTES: ${REMINDER_CHECK_INTERVAL_MINUTES:-1440}
+      WEBHOOK_URL:
+      WEBHOOK_SECRET:
     ports:
       - "3000:3000"
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: carkeeper
+      POSTGRES_USER: carkeeper
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - carkeeper_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  carkeeper_postgres_data:
